@@ -4,7 +4,7 @@ How to Initially Get Set-Up With Node.Js
    - command: mkdir canine-rescue
    - command: cd canine-rescue
    - command: git clone https://github.com/crockb/canine-rescue-database ./
-   - enter username, password
+   - enter username, password (if prompted)
    - command: mkdir node_modules
    - command: mv node_modules.zip node_modules
    - command: cd node_modules
@@ -31,7 +31,7 @@ Additional Information About Folders and Files:
   - /public - styles.css, also will include jQuery for update/delete functions needed (see archive)
   - /views - templates
   - /node_modules - contains the 6000+ files for Node.Js (DON'T MODIFY OR UPLOAD TO GITHUB)
-  - /archive - not-in-use, past examples from CS 340 for reference
+  - /archive - not-in-use, past examples from CS 340 for reference as needed to build new features
 
 Author:  Bryant Crock (5/18/2019)
 **************************************************************************
