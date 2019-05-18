@@ -1,0 +1,39 @@
+<h1>Supervisor: {{supervisor.first_name}} {{supervisor.last_name}} - {{supervisor.code_name}}:</h1>
+
+<h4>Add Subordinate</h4>
+
+<div class="add-class">
+    <form id="addSubordinate" action="/football/supervisor/add/{{supervisor.supervisor_id}}" method="post" class="form-inline">
+        <label for="Name" class="wide-select">Add to Subordinates:</label>
+        <select name="personnel_id" class="wide-select" required>
+            {{#each available_personnel}}
+            <option value="{{personnel_id}}">{{first_name}} {{last_name}} - {{code_name}}</option>
+            {{/each}}
+        </select><br />
+        <input type="submit" value="Submit" class="add-subordinate-submit" />
+    </form>
+</div>
+
+<h4>List of Subordinates</h4>
+<div class="view-class">
+    <table>
+        <thead>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Team</th>
+        <th>Salary</th>
+        </thead>
+        <tbody>
+            {{#each team_personnel}}
+            <tr>
+                <td>{{first_name}}</td>
+                <td>{{last_name}}</td>
+                <td>{{code_name}}</td>
+                <td class="center-column">${{salary}}</td>
+
+                <td><a href="/football/supervisor/{{personnel_id}}/{{supervisor_id}}">Remove</a></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

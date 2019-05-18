@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+	<title>CS 340 - Final Project - Bryant Crock</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/static/styles.css" type="text/css">
+    {{#each jsscripts}}
+    <script src="/static/{{this}}"></script>
+    {{/each}}
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header-wrapper">
+            <div id="header" class="container">
+                <div id="logo">
+                    <h1>Canine Rescue Database</h1>
+                </div>
+            </div>
+        </div>
+        <div id="menu-wrapper">
+            <div id="menu" class="container">
+                <ul>
+                    <li><a href="/football/personnel">Personnel</a></li>
+                    <li><a href="/football/team">Teams</a></li>
+                    <li><a href="/football/supervisor">Supervisors</a></li>
+                    <li><a href="/football/position">Positions</a></li>
+                </ul>
+            </div>
+            <!-- end #menu -->
+        </div>
+            <div id="page" class="container">
+                <div id="content">
+                    {{{body}}}
+                </div>
+            </div>
+    </div>
+            <!--</div>-->
+            <div id="menu-wrapper">
+                <div id="menu" class="container">
+                    <ul>
+                        <li><a href="/football/personnel">Personnel</a></li>
+                        <li><a href="/football/team">Teams</a></li>
+                        <li><a href="/football/supervisor">Supervisors</a></li>
+                        <li><a href="/football/position">Positions</a></li>
+                    </ul>
+                </div>
+                <!-- end #menu -->
+            </div>
+</body>
+</html>

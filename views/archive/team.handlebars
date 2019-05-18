@@ -1,0 +1,74 @@
+<h1>Teams</h1>
+<p>Represents teams within the league.   Total salary is the sum of all personnel on the team.  Teams need to have at least 1 individual with a salary in order to appear in the "FILTER BY" feature.</p>
+
+<h4>Add New</h4>
+
+<div class="add-class">
+    <form id="addTeam" action="/football/team" method="post" class="form-inline">
+        
+        <label for="Team Name">Team Name:</label>
+        <input type="text" name="name" required/>
+
+        <label for="Code Name">Code Name:</label>
+        <input type="text" name="code_name" required/>
+
+        <label for="Total Wins">Total Wins = :</label>
+        <input type="number" name="total_wins"/>
+
+        <label for="Total Losses">Total Loss = :</label>
+        <input type="number" name="total_losses"/>
+
+        <input type="submit" value="Submit" class="add-submit" />
+    </form>
+</div>
+
+<h4>Filter By</h4>
+
+<div class="filter-class">
+    <form id="filterTeam" action="/football/team/filter" method="post" class="form-inline">
+
+        <label for="Team Name">Team Name:</label>
+        <input type="text" name="team_name" />
+
+        <label for="Code Name">Code Name:</label>
+        <input type="text" name="code_name" />
+
+        <label for="Total Wins">Wins >= :</label>
+        <input type="number" name="total_wins" />
+
+        <label for="Total Losses">Losses >= :</label>
+        <input type="number" name="total_losses" />
+
+        <label for="Total Salary">Salary >= :</label>
+        <input type="number" name="total_salary" />
+
+        <input type="submit" value="Submit" class="filter-submit" />
+    </form>
+</div>
+
+<h4>View Teams</h4>
+<div class="view-class">
+    <table>
+        <thead>
+        <th>Name</th>
+        <th>Code</th>
+        <th>Total Wins</th>
+        <th>Total Losses</th>
+        <th>Total Salary</th>
+        </thead>
+        <tbody>
+            {{#each teams}}
+            <tr>
+                <td>{{team_name}}</td>
+                <td class="center-column">{{code_name}}</td>
+                <td class="center-column">{{total_wins}}</td>
+                <td class="center-column">{{total_losses}}</td>
+                <td class="center-column">${{total_salary}}</td>
+                <td class="center-column"><button onclick="deleteTeam({{team_id}})">Delete</button></td>
+                <td class="center-column"><a href="/football/team/{{team_id}}">Update</a></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+  

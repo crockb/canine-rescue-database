@@ -1,0 +1,14 @@
+<h1>Update {{teams.team_name}}:</h1>
+<div class="update-class">
+    <form id="update-team" action="/football/team" method="post" class="form-inline">
+        <label for="Team Name">Team Name:</label>
+        <input type="text" name="team_name" value="{{teams.team_name}}" required>
+        <label for="Code Name">Code Name:</label>
+        <input type="text" name="code_name" value="{{teams.code_name}}" required>
+        <label for="Wins">Wins = :</label>
+        <input type="number" name="total_wins" value="{{teams.total_wins}}">
+        <label for="Losses">Losses = :</label>
+        <input type="number" name="total_losses" value="{{teams.total_losses}}">
+    </form>
+    <button onclick="updateTeam({{teams.team_id}})">Update</button>
+</div>

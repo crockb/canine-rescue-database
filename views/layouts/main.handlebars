@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+	<title>Canine Rescue Database</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/static/styles.css" type="text/css">
+    {{#each jsscripts}}
+    <script src="/static/{{this}}"></script>
+    {{/each}}
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header-wrapper">
+            <div id="header" class="container">
+                <div id="logo">
+                    <h1>Canine Rescue Database</h1>
+                    <p>IN DEVELOPMENT</p>
+                </div>
+            </div>
+        </div>
+        <div id="menu-wrapper">
+            <div id="menu" class="container">
+                <ul>
+                    <li><a href="#">Advocate</a></li>
+                    <li><a href="#">Volunteer</a></li>
+                    <li><a href="#">Favorites</a></li>
+                    <li><a href="#">Messages</a></li>
+                    <li><a href="#">Help</a></li>
+                    <li><a href="#">My Account</a></li>
+                </ul>
+            </div>
+            <!-- end #menu -->
+        </div>
+            <div id="page" class="container">
+                <div id="content">
+                    {{{body}}}
+                </div>
+            </div>
+    </div>
+            <!--</div>-->
+            <div id="menu-wrapper">
+                <div id="menu" class="container">
+                    <ul>
+                        <li><a href="#">Advocate</a></li>
+                        <li><a href="#">Volunteer</a></li>
+                        <li><a href="#">Favorites</a></li>
+                        <li><a href="#">Messages</a></li>
+                        <li><a href="#">Help</a></li>
+                        <li><a href="#">My Account</a></li>
+                    </ul>
+                </div>
+                <!-- end #menu -->
+            </div>
+</body>
+</html>

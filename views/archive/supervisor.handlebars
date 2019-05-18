@@ -1,0 +1,67 @@
+<h1>Supervisors</h1>
+<p>Represents advisory roles such as coaches and owners on a team.  Supervisors are personnel themselves.  Only existing personnel can be promoted to supervisor.  Click "Add/Remove Subordinates" to assign personnel to supervisors.   The web interface limits supervisors to only be able to add subordinates on the same team as them.   Demoting a supervisor sets the subordinates supervisor value to null.  Supervisors need to be assigned at least 1 subordinate in order to appear in the "FILTER BY" feature.</p>
+<h4>Add New</h4>
+
+<div class="add-class">
+    <form id="addSupervisor" action="/football/supervisor" method="post" class="form-inline">
+        <label for="Name" class="wide-select">Promote to Supervisor:</label>
+        <select name="personnel_id" class="wide-select" required>
+            {{#each nonsupervisors}}
+            <option value="{{personnel_id}}">{{first_name}} {{last_name}} - {{code_name}}</option>
+            {{/each}}
+        </select><br />
+        <input type="submit" value="Submit" class="add-supervisor-submit" />
+    </form>
+</div>
+
+<h4>Filter By</h4>
+
+<div class="filter-class">
+    <form id="filterSupervisor" action="/football/supervisor/filter" method="post" class="form-inline">
+
+        <label for="First Name">First Name:</label>
+        <input type="text" name="first_name" />
+
+        <label for="Last Name">Last Name:</label>
+        <input type="text" name="last_name" />
+
+        <label for="Team">Team:</label>
+        <select name="team_id">
+            <option value="0"> - all - </option>
+            {{#each teams}}
+            <option value="{{team_id}}">{{team_name}}</option>
+            {{/each}}
+        </select><br>
+
+        <label for="Subordinates">Subs. >:</label>
+        <input type="number" name="subordinates" />
+
+        <input type="submit" value="Submit" class="filter-submit" />
+    </form>
+</div>
+<h4>View Supervisors</h4>
+<div class="view-class">
+    <table class="wide-table">
+        <thead>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Team</th>
+        <th>Salary</th>
+        <th>Subordinates</th>
+        </thead>
+        <tbody>
+            {{#each supervisors}}
+            <tr>
+                <td>{{first_name}}</td>
+                <td>{{last_name}}</td>
+                <td>{{team_name}}</td>
+                <td class="center-column">${{salary}}</td>
+                <td class="center-column">{{subordinates}}</td>
+                <td><button onclick="deletesupervisor({{supervisor_id}})">Demote</button></td>
+                <td><a href="/football/supervisor/{{supervisor_id}}">Add/Remove Subordinates</a></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+  

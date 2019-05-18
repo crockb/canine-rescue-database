@@ -1,0 +1,94 @@
+<h1>Personnel</h1>
+
+<p>Represents players and coaches on a team.   To assign a position to a personnel, click "Update" within the list below.  To assign or remove a supervisor from a personnel, click "Update" to see who the supervisor is.  Once you know their supervisor, navigate to the Supervisor tab, click "Update" next to the correct Supervisor.  From here you will be able to remove.  Personnel need to be assigned at least 1 position in order to appear in the "FILTER BY" feature.</p>
+
+<h4>Add New</h4>
+
+<div class="add-class">
+    <form id="addPersonnel" action="/football/personnel" method="post" class="form-inline">
+        <label for="First Name">First Name:</label>
+        <input type="text" name="first_name" required/>
+        <label for="Last Name">Last Name:</label>
+        <input type="text" name="last_name" required/>
+        <label for="Team">Team:</label>
+        <select name="team_id" required>
+            {{#each teams}}
+            <option value="{{team_id}}">{{team_name}}</option>
+            {{/each}}
+        </select><br>
+        <label for="Salary">Salary = :</label>
+        <input type="number" name="salary" required/>
+
+        <label for="Height">Height = :</label>
+        <input type="number" name="height" required/>
+
+        <label for="Weight">Weight = :</label>
+        <input type="number" name="weight" required/>
+        <input type="submit" value="Submit" class="add-submit" />
+    </form>
+</div>
+
+<h4>Filter By</h4>
+
+<div class="filter-class">
+    <form id="filterPersonnel" action="/football/personnel/filter" method="post" class="form-inline">
+
+        <label for="First Name">First Name:</label>
+        <input type="text" name="first_name" />
+
+        <label for="Last Name">Last Name:</label>
+        <input type="text" name="last_name" />
+
+        <label for="Team">Team:</label>
+        <select name="team_id">
+            <option value="0"> - all - </option>
+            {{#each teams}}
+            <option value="{{team_id}}">{{team_name}}</option>
+            {{/each}}
+        </select><br>
+
+        <label for="salary">Salary >= :</label>
+        <input type="number" name="salary" />
+
+        <label for="height">Height >= :</label>
+        <input type="number" name="height" />
+
+        <label for="weight">Weight >= :</label>
+        <input type="number" name="weight" />
+
+        <label for="total_positions">Positions >= :</label>
+        <input type="number" name="total_positions" />
+
+        <input type="submit" value="Submit" class="filter-submit" />
+    </form>
+</div>
+<h4>View Personnel</h4>
+<div class="view-class">
+    <table class="wide-table">
+        <thead>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Team</th>
+        <th>Salary</th>
+        <th>Height</th>
+        <th>Weight</th>
+        <th>Positions</th>
+        </thead>
+        <tbody>
+            {{#each personnel}}
+            <tr>
+                <td>{{first_name}}</td>
+                <td>{{last_name}}</td>
+                <td>{{team_name}}</td>
+                <td class="center-column">{{salary}}</td>
+                <td class="center-column">{{height}}</td>
+                <td class="center-column">{{weight}}</td>
+                <td class="center-column">{{total_positions}}</td>
+                <td><button onclick="deletepersonnel({{personnel_id}})">Delete</button></td>
+                <td><a href="/football/personnel/{{personnel_id}}">Update</a></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+  

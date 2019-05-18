@@ -1,0 +1,59 @@
+<h1>Positions</h1>
+
+<p>Represents common positions on a team such as quarterback, head coach and owner.  Total personnel is a count of how many times a position has been assigned to personnel.  Deleting a position will remove it from being assigned to those personnel previously assigned it.  Positions need to be assigned to at least 1 individual in order to appear in the "FILTER BY" feature.</p>
+
+<h4>Add New</h4>
+
+<div class="add-class">
+    <form id="addPosition" action="/football/position" method="post" class="form-inline">
+        
+        <label for="Position Name" class="wide">Position Name:</label>
+        <input type="text" name="position_name" required/>
+
+        <label for="Code Name">Code Name:</label>
+        <input type="text" name="position_code_name" required/>
+
+        <input type="submit" value="Submit" class="add-position-submit" />
+    </form>
+</div>
+
+<h4>Filter By</h4>
+
+<div class="filter-class">
+    <form id="filterPosition" action="/football/position/filter" method="post" class="form-inline">
+
+        <label for="Position Name" class="wide">Position Name:</label>
+        <input type="text" name="name" />
+
+        <label for="Code Name">Code Name:</label>
+        <input type="text" name="code_name" />
+
+        <label for="Total Personnel" class="wide">Personnel >= :</label>
+        <input type="number" name="total_personnel" />
+
+        <input type="submit" value="Submit" class="filter-submit" />
+    </form>
+</div>
+
+<h4>View Positions</h4>
+<div class="view-class">
+    <table>
+        <thead>
+        <th>Position Name</th>
+        <th>Code Name</th>
+        <th>Total Personnel</th>
+        </thead>
+        <tbody>
+            {{#each positions}}
+            <tr>
+                <td>{{name}}</td>
+                <td class="center-column">{{code_name}}</td>
+                <td class="center-column">{{total_personnel}}</td>
+                <td class="center-column"><button onclick="deleteposition({{position_id}})">Delete</button></td>
+                <td class="center-column"><a href="/football/position/{{position_id}}">Update</a></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+  

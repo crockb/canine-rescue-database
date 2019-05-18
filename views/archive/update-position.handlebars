@@ -1,0 +1,10 @@
+<h1>Update Position: {{position.name}} - {{position.code_name}}:</h1>
+<div class="update-class">
+    <form id="update-position" action="/football/position" method="post" class="form-inline">
+        <label for="Position Name" class="wide-select">Position Name:</label>
+        <input type="text" name="name" value="{{position.name}}" required>
+        <label for="Code Name">Code Name:</label>
+        <input type="text" name="code_name" value="{{position.code_name}}" required>
+    </form>
+    <button onclick="updateposition({{position.position_id}})">Update</button>
+</div>
