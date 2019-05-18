@@ -1,9 +1,11 @@
 *************************************************************************
-How to Configure Node.Js
-   - create a new directory within the osu engineering server
-   - type the command: git clone https://github.com/wolfordj/CS290-Server-Side-Examples.git ./
-   - go to /diagnostic directory
-   - type the command: npm install
+How to Initially Get Set-Up With Node.Js
+   - create a new directory within the osu engineering server (example: cs3361/canine-rescue)
+   - command: git clone https://github.com/crockb/canine-rescue-database ./
+   - command: cd node_modules
+   - command: unzip node_modules.zip
+   - command: 
+   - switch back to directory with all the filescd: ..
    - type the command: mv dbcon.js.template dbcon.js
    - open dbcon.js file
    - input DB credentials
