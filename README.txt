@@ -22,7 +22,7 @@ How to Access PHP MyAdmin Database Web Interface:
   - VPN into sds.oregonstate.edu with Cisco
   - https://tools.engr.oregonstate.edu/phpMyAdmin/index.php
   - username: cs361_crockb
-  - password: 6754
+  - password: (sent via slack channel)
   - server choice: classmysql
 
 Additional Information About Folders and Files:
