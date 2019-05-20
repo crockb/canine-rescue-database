@@ -28,6 +28,7 @@ How to Access PHP MyAdmin Database Web Interface:
 Additional Information About Folders and Files:
   - main.js - primary server program
   - canine-rescue.js - primary source for functions and routes
+  - canine-rescue-db.sql - contains the SQL to update the database tables and sample data
   - /public - styles.css, also will include jQuery for update/delete functions needed (see archive)
   - /views - templates
   - /node_modules - contains the 6000+ files for Node.Js (DON'T MODIFY OR UPLOAD TO GITHUB)
