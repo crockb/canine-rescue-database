@@ -587,10 +587,22 @@ iframe {
 
 table
     {
-	    width: 80%;
+	    width: 95%;
         margin-left:auto;
         margin-right:auto;
     }
+
+td
+	{
+		font-size:14px;
+	}
+
+th
+	{
+		font-weight:bold;
+		font-size:14px;
+	}
+
 
 .wide-table{
     	width: 99%;

@@ -20,6 +20,80 @@ module.exports = function(){
 ** FUNCTIONS
 ****************************************************************************************************/
 
+    function getShelters(res, mysql, context, complete){
+        mysql.pool.query("SELECT shelter_id, name, address, policy, max_capacity, total_dogs FROM shelter INNER JOIN (SELECT shelter_id as s_id, COUNT(dog_id) as total_dogs FROM dog_locations WHERE discharge_date IS NULL GROUP BY shelter_id) dl ON shelter_id = dl.s_id ORDER BY name ASC", function (error, results, fields) {
+            if(error){
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            context.shelters = results;
+            complete();
+        });
+    }
+
+    function getRescueGroups(res, mysql, context, complete){
+        mysql.pool.query("SELECT rescue_group_id, name, address, phone_number, total_dogs FROM rescue_group INNER JOIN (SELECT rescue_group_id as rg_id, COUNT(dog_id) as total_dogs FROM dog_locations WHERE discharge_date IS NULL GROUP BY rescue_group_id) dl ON rescue_group_id = dl.rg_id ORDER BY name ASC", function (error, results, fields) {
+            if(error){
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            context.rescue_groups = results;
+            complete();
+        });
+    }
+
+    function getEvents(res, mysql, context, complete){
+        mysql.pool.query("SELECT event_id, name, address, date_time, description, total_dogs FROM event INNER JOIN (SELECT event_id as e_id, COUNT(dog_id) as total_dogs FROM dogs_at_events GROUP BY event_id) dae ON event_id = dae.e_id ORDER BY date_time ASC", function (error, results, fields) {
+            if(error){
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            context.events = results;
+            complete();
+        });
+    }
+
+
+    function getDogsByShelterId(res, mysql, context, id, complete) {
+    var sql = "SELECT tbl3.name as shelter_name, tbl1.dog_id, tbl2.name, birthday, sex, breed, weight, status FROM (SELECT dog_id, shelter_id FROM dog_locations WHERE shelter_id = ? AND discharge_date IS NULL) tbl1 INNER JOIN (SELECT dog_id, name, birthday, sex, breed, weight, status FROM dog) tbl2 ON tbl1.dog_id = tbl2.dog_id INNER JOIN (SELECT shelter_id, name FROM shelter) tbl3 ON tbl1.shelter_id = tbl3.shelter_id";
+    var inserts = [id];
+    mysql.pool.query(sql, inserts, function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+            }
+                context.dogs = results;
+                complete();
+        });
+    }
+
+
+    function getDogsByRescueGroupId(res, mysql, context, id, complete) {
+    var sql = "SELECT tbl3.name as rescue_group_name, tbl1.dog_id, tbl2.name, birthday, sex, breed, weight, status FROM (SELECT dog_id, rescue_group_id FROM dog_locations WHERE rescue_group_id = ? AND discharge_date IS NULL) tbl1 INNER JOIN (SELECT dog_id, name, birthday, sex, breed, weight, status FROM dog) tbl2 ON tbl1.dog_id = tbl2.dog_id INNER JOIN (SELECT rescue_group_id, name FROM rescue_group) tbl3 ON tbl1.rescue_group_id = tbl3.rescue_group_id";
+    var inserts = [id];
+    mysql.pool.query(sql, inserts, function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+            }
+                context.dogs = results;
+                complete();
+        });
+    }
+
+    function getDogsByEventId(res, mysql, context, id, complete) {
+    var sql = "SELECT tbl3.name as event_name, tbl1.dog_id, tbl2.name, birthday, sex, breed, weight, status FROM (SELECT dog_id, event_id FROM dogs_at_events WHERE event_id = ?) tbl1 INNER JOIN (SELECT dog_id, name, birthday, sex, breed, weight, status FROM dog) tbl2 ON tbl1.dog_id = tbl2.dog_id INNER JOIN (SELECT event_id, name FROM event) tbl3 ON tbl1.event_id = tbl3.event_id";
+    var inserts = [id];
+    mysql.pool.query(sql, inserts, function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+            }
+                context.dogs = results;
+                complete();
+        });
+    }
+
 
 
 
@@ -27,19 +101,85 @@ module.exports = function(){
 ** ROUTES
 ****************************************************************************************************/
 
-// HOMEPAGE
+// HOME PAGE
 
     router.get('/home', function (req, res) {
         res.render('home');
     });
 
+
+// LISTS PAGE (SHELTERS, RESCUE GROUPS, EVENTS)
+
+    router.get('/lists', function (req, res) {
+        var callbackCount = 0;
+        var context = {};
+        //context.jsscripts = ["deletepersonnel.js"];
+        var mysql = req.app.get('mysql');
+        getShelters(res, mysql, context, complete);
+        getRescueGroups(res, mysql, context, complete);
+        getEvents(res, mysql, context, complete);
+        function complete() {
+            callbackCount++;
+            if (callbackCount >= 3) {
+                res.render('lists', context);
+            }
+        }
+    });
+
+
+// DOGS BY SHELTER
+
+    router.get('/shelter/:id', function (req, res) {
+        callbackCount = 0;
+        var context = {};
+        //context.jsscripts = ["selectedteam.js", "updateperson.js"];
+        var mysql = req.app.get('mysql');
+        getDogsByShelterId(res, mysql, context, req.params.id, complete);
+        function complete() {
+            callbackCount++;
+            if (callbackCount >= 1) {
+                res.render('dogs-by-shelter', context);
+            }
+        }
+    });
+
+// DOGS BY RESCUE GROUP
+
+    router.get('/rescue-group/:id', function (req, res) {
+        callbackCount = 0;
+        var context = {};
+        //context.jsscripts = ["selectedteam.js", "updateperson.js"];
+        var mysql = req.app.get('mysql');
+        getDogsByRescueGroupId(res, mysql, context, req.params.id, complete);
+        function complete() {
+            callbackCount++;
+            if (callbackCount >= 1) {
+                res.render('dogs-by-rescue-group', context);
+            }
+        }
+    });
+
+
+// DOGS BY EVENT
+
+    router.get('/event/:id', function (req, res) {
+        callbackCount = 0;
+        var context = {};
+        //context.jsscripts = ["selectedteam.js", "updateperson.js"];
+        var mysql = req.app.get('mysql');
+        getDogsByEventId(res, mysql, context, req.params.id, complete);
+        function complete() {
+            callbackCount++;
+            if (callbackCount >= 1) {
+                res.render('dogs-by-event', context);
+            }
+        }
+    });
+
+
+
 return router;
 }();
-
-
-
-
-
 
 /* BRYANT'S PREVIOUS CODE FROM FOOTBALL DATABASE
 

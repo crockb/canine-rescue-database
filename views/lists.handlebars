@@ -1,0 +1,77 @@
+<h1>Lists</h1>
+<p>List of Shelters, Rescue Groups and Events</p>
+
+<h4>Shelters</h4>
+
+<div class="view-class">
+    <table>
+        <thead>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Policy</th>
+        <th>Max Capacity</th>
+        <th>Total Dogs</th>
+        </thead>
+        <tbody>
+            {{#each shelters}}
+            <tr>
+                <td>{{name}}</td>
+                <td>{{address}}</td>
+                <td class="center-column">{{policy}}</td>
+                <td class="center-column">{{max_capacity}}</td>
+                <td class="center-column"><a href="/canine-rescue/shelter/{{shelter_id}}">{{total_dogs}}</a></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+
+<h4>Rescue Groups</h4>
+
+<div class="view-class">
+    <table>
+        <thead>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Phone Number</th>
+        <th>Total Dogs</th>
+        </thead>
+        <tbody>
+            {{#each rescue_groups}}
+            <tr>
+                <td>{{name}}</td>
+                <td>{{address}}</td>
+                <td class="center-column">{{phone_number}}</td>
+                <td class="center-column"><a href="/canine-rescue/rescue-group/{{rescue_group_id}}">{{total_dogs}}</a></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+
+<h4>Events</h4>
+
+<div class="view-class">
+    <table>
+        <thead>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Date & Time</th>
+        <th>Description</th>
+        <th>Total Dogs</th>
+        </thead>
+        <tbody>
+            {{#each events}}
+            <tr>
+                <td>{{name}}</td>
+                <td>{{address}}</td>
+                <td class="center-column">{{date_time}}</td>
+                <td>{{description}}</td>
+                <td class="center-column"><a href="/canine-rescue/event/{{event_id}}">{{total_dogs}}</a></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
