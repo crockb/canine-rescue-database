@@ -1,0 +1,55 @@
+<h1>Dog Details</h1>
+
+
+<div class="view-class">
+    {{#each dogs}}
+	<table>
+        <thead>
+        <th>{{name}}</th>
+        </thead>
+        <tbody>
+            <tr>
+				<td>Name:</td>
+				<td>{{name}}</td>
+			</tr>
+			<tr>
+				<td>Birthday:</td>
+				<td>{{birthday}}</td>
+			</tr>
+            <tr>
+				<td>Sex:</td>
+				<td>{{sex}}</td>
+			</tr>
+            <tr>
+				<td>Breed:</td>
+				<td>{{breed}}</td>
+			</tr>
+            <tr>
+				<td>Weight:</td>
+				<td>{{weight}}</td>
+			</tr>
+            <tr>
+				<td>Status:</td>
+				<td>{{status}}</td>
+			</tr>
+			{{#if shelter_name}}
+			<tr>
+				<td>Shelter:</td>
+				<td><a href="/canine-rescue/shelter/{{shelter_id}}">{{shelter_name}}</td>
+			</tr>
+			{{else}}
+			<tr>
+				<td>Rescue Group:</td>
+				<td><a href="/canine-rescue/rescue-group/{{rg_id}}">{{rg_name}}</td>
+			</tr>
+			{{/if}}
+			{{#if discharge_date}}
+			<tr>
+				<td>Discharge Date:</td>
+				<td>{{discharge_date}}</td>
+			</tr>
+			{{/if}}
+        </tbody>
+    </table>
+	{{/each}}
+</div>

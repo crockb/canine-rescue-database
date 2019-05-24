@@ -93,6 +93,19 @@ module.exports = function(){
                 complete();
         });
     }
+	
+	function getDogById(res, mysql, context, id, complete) {
+		var sql = "SELECT dog.dog_id as dog_id, dog.name as name, birthday, sex, breed, weight, status, shelter_id, shelter_name, rg_id, rg_name, admission_date, discharge_date FROM dog INNER JOIN (SELECT dog_id, shelter_id, shelter_name, rg_id, rescue_group.name as rg_name, admission_date, discharge_date FROM (SELECT dog_locations.dog_id, dog_locations.shelter_id as shelter_id, dog_locations.rescue_group_id as rg_id, shelter.name as shelter_name, dog_locations.admission_date, dog_locations.discharge_date FROM dog_locations LEFT JOIN shelter ON dog_locations.shelter_id = shelter.shelter_id) tbl1 LEFT JOIN rescue_group ON rg_id = rescue_group.rescue_group_id) locations ON dog.dog_id = locations.dog_id WHERE dog.dog_id = ?";
+		var inserts = [id];
+		mysql.pool.query(sql, inserts, function (error, results, fields) {
+			if (error) {
+				res.write(JSON.stringify(error));
+				res.end();
+				}
+					context.dogs = results;
+					complete();
+			});
+	}
 
 
 
@@ -176,6 +189,20 @@ module.exports = function(){
         }
     });
 
+
+// DOGS DETAIL
+    router.get('/dog/:id', function (req, res) {
+        callbackCount = 0;
+        var context = {};
+        var mysql = req.app.get('mysql');
+        getDogById(res, mysql, context, req.params.id, complete);
+        function complete() {
+            callbackCount++;
+            if (callbackCount >= 1) {
+                res.render('dog-by-id', context);
+            }
+        }
+    });
 
 
 return router;
