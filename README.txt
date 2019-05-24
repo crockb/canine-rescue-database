@@ -15,7 +15,7 @@ How to Run the Canine Database Application
    - VPN into sds.oregonstate.edu with Cisco
    - sign into osu server and navigate to cs361/canine-rescue directory
    - commmand: node main.js [port]
-   - in browser type:  [hostname]:[port]/canine-database/home
+   - in browser type:  [hostname]:[port]/canine-rescue/home
 
 
 How to Access PHP MyAdmin Database Web Interface:
