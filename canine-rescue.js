@@ -55,7 +55,7 @@ module.exports = function(){
 
 
     function getDogsByShelterId(res, mysql, context, id, complete) {
-    var sql = "SELECT tbl3.name as shelter_name, tbl1.dog_id, tbl2.name, birthday, sex, breed, weight, status FROM (SELECT dog_id, shelter_id FROM dog_locations WHERE shelter_id = ? AND discharge_date IS NULL) tbl1 INNER JOIN (SELECT dog_id, name, birthday, sex, breed, weight, status FROM dog) tbl2 ON tbl1.dog_id = tbl2.dog_id INNER JOIN (SELECT shelter_id, name FROM shelter) tbl3 ON tbl1.shelter_id = tbl3.shelter_id";
+    var sql = "SELECT tbl3.name as shelter_name, tbl1.dog_id as dog_id, tbl2.name, birthday, sex, breed, weight, status FROM (SELECT dog_id, shelter_id FROM dog_locations WHERE shelter_id = ? AND discharge_date IS NULL) tbl1 INNER JOIN (SELECT dog_id, name, birthday, sex, breed, weight, status FROM dog) tbl2 ON tbl1.dog_id = tbl2.dog_id INNER JOIN (SELECT shelter_id, name FROM shelter) tbl3 ON tbl1.shelter_id = tbl3.shelter_id";
     var inserts = [id];
     mysql.pool.query(sql, inserts, function (error, results, fields) {
         if (error) {
@@ -69,7 +69,7 @@ module.exports = function(){
 
 
     function getDogsByRescueGroupId(res, mysql, context, id, complete) {
-    var sql = "SELECT tbl3.name as rescue_group_name, tbl1.dog_id, tbl2.name, birthday, sex, breed, weight, status FROM (SELECT dog_id, rescue_group_id FROM dog_locations WHERE rescue_group_id = ? AND discharge_date IS NULL) tbl1 INNER JOIN (SELECT dog_id, name, birthday, sex, breed, weight, status FROM dog) tbl2 ON tbl1.dog_id = tbl2.dog_id INNER JOIN (SELECT rescue_group_id, name FROM rescue_group) tbl3 ON tbl1.rescue_group_id = tbl3.rescue_group_id";
+    var sql = "SELECT tbl3.name as rescue_group_name, tbl1.dog_id as dog_id, tbl2.name, birthday, sex, breed, weight, status FROM (SELECT dog_id, rescue_group_id FROM dog_locations WHERE rescue_group_id = ? AND discharge_date IS NULL) tbl1 INNER JOIN (SELECT dog_id, name, birthday, sex, breed, weight, status FROM dog) tbl2 ON tbl1.dog_id = tbl2.dog_id INNER JOIN (SELECT rescue_group_id, name FROM rescue_group) tbl3 ON tbl1.rescue_group_id = tbl3.rescue_group_id";
     var inserts = [id];
     mysql.pool.query(sql, inserts, function (error, results, fields) {
         if (error) {
@@ -82,7 +82,7 @@ module.exports = function(){
     }
 
     function getDogsByEventId(res, mysql, context, id, complete) {
-    var sql = "SELECT tbl3.name as event_name, tbl1.dog_id, tbl2.name, birthday, sex, breed, weight, status FROM (SELECT dog_id, event_id FROM dogs_at_events WHERE event_id = ?) tbl1 INNER JOIN (SELECT dog_id, name, birthday, sex, breed, weight, status FROM dog) tbl2 ON tbl1.dog_id = tbl2.dog_id INNER JOIN (SELECT event_id, name FROM event) tbl3 ON tbl1.event_id = tbl3.event_id";
+    var sql = "SELECT tbl3.name as event_name, tbl1.dog_id as dog_id, tbl2.name, birthday, sex, breed, weight, status FROM (SELECT dog_id, event_id FROM dogs_at_events WHERE event_id = ?) tbl1 INNER JOIN (SELECT dog_id, name, birthday, sex, breed, weight, status FROM dog) tbl2 ON tbl1.dog_id = tbl2.dog_id INNER JOIN (SELECT event_id, name FROM event) tbl3 ON tbl1.event_id = tbl3.event_id";
     var inserts = [id];
     mysql.pool.query(sql, inserts, function (error, results, fields) {
         if (error) {
@@ -194,6 +194,21 @@ module.exports = function(){
     router.get('/dog/:id', function (req, res) {
         callbackCount = 0;
         var context = {};
+		context.owner = false;
+        var mysql = req.app.get('mysql');
+        getDogById(res, mysql, context, req.params.id, complete);
+        function complete() {
+            callbackCount++;
+            if (callbackCount >= 1) {
+                res.render('dog-by-id', context);
+            }
+        }
+    });
+	
+	router.get('/dog/owner/:id', function (req, res) {
+        callbackCount = 0;
+        var context = {};
+		context.owner = true;
         var mysql = req.app.get('mysql');
         getDogById(res, mysql, context, req.params.id, complete);
         function complete() {

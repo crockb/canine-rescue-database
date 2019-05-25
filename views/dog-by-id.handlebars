@@ -4,10 +4,26 @@
 <div class="view-class">
     {{#each dogs}}
 	<table>
-        <thead>
-        <th>{{name}}</th>
+        <thead align="left">
+		<tr>
+			<th>{{name}}</th>
+			<th></th>
+		</tr>
         </thead>
         <tbody>
+			<tr>
+				<td><img src="/static/photos/dog{{dog_id}}.jpg"></td>
+			</tr>
+			<tr>
+				<td><button type="button">Add to Favorites</button></td>
+				<td></td>
+			</tr>
+			{{#if ../owner}}
+			<tr>
+				<td><button type="button">Request Transport</button></td>
+				<td></td>
+			</tr>
+			{{/if}}
             <tr>
 				<td>Name:</td>
 				<td>{{name}}</td>
@@ -35,12 +51,12 @@
 			{{#if shelter_name}}
 			<tr>
 				<td>Shelter:</td>
-				<td><a href="/canine-rescue/shelter/{{shelter_id}}">{{shelter_name}}</td>
+				<td>{{shelter_name}} (<a href="#">Contact</a> | <a href="/canine-rescue/shelter/{{shelter_id}}">More Dogs</a>)</td>
 			</tr>
 			{{else}}
 			<tr>
 				<td>Rescue Group:</td>
-				<td><a href="/canine-rescue/rescue-group/{{rg_id}}">{{rg_name}}</td>
+				<td>{{rg_name}} (<a href="#">Contact</a> | <a href="/canine-rescue/rescue-group/{{rg_id}}">More Dogs</a>)</td>
 			</tr>
 			{{/if}}
 			{{#if discharge_date}}
