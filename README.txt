@@ -17,6 +17,11 @@ How to Run the Canine Database Application
    - commmand: node main.js [port]
    - in browser type:  [hostname]:[port]/canine-rescue/home
 
+How to Run the Canine Database Application Forever
+   - in the canine-rescue directory, command: npm install forever
+   - to start a new process, command: ~[/CS361/canine-rescue]/node_modules/forever/bin/forever start main.js [port]
+   - to stop the forever process, command: ~[/CS361/canine-rescue]/node_modules/forever/bin/forever stopall
+   - note: brackets around the path indicate that this will vary depending on where you have your node_modules folder saved
 
 How to Access PHP MyAdmin Database Web Interface:
   - VPN into sds.oregonstate.edu with Cisco
