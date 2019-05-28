@@ -602,6 +602,21 @@ th
 		font-weight:bold;
 		font-size:14px;
 	}
+	
+.btn
+	{
+		background-color: #000000;
+		border: none;
+		color: white;
+		padding: 14px 26px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-family: 'Muli', sans-serif;
+		border-radius: 8px;
+		font-size: 14px;
+		width: ;
+	}
 
 
 .wide-table{
