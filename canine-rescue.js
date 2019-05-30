@@ -219,6 +219,11 @@ module.exports = function(){
         }
     });
 
+// Transportation Confirmation
+    router.get('/confirm', function(req, res) {
+        res.render('confirm');
+    });
+
 
 return router;
 }();
