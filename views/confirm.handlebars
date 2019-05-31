@@ -1,3 +1,24 @@
 <!DOCTYPE html>
 <h1>Transportation Confirmation</h1>
-<iframe src="https://calendar.google.com/calendar/embed?src=oregonstate.edu_i98jdqce8oklho3jmc8hrc7488%40group.calendar.google.com&ctz=America%2FNew_York" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+<div id="transportDetailWrapper">
+	<form>
+		<fieldset>
+			<legend>Pick Up Information: </legend>
+			<label>Transport Capacity: </label>
+			<input id="plus" type="button" value="Increase" onclick="incCapacity()">
+			<input id="capacity" type="number" value="10">
+			<input id="minus" type="button" value ="Decrease" onclick="decCapacity()">
+			<label>Date of Pick Up: </label>
+			<input id="datePickUp" type="date" value="4/15/2019">
+			<label>Time of Pick Up: </label>
+			<input id="timePickUp" type="time" value="10:00 am">
+		</fieldset>
+	</form>
+</div>
+
+<div id="calendarWrapper">
+	<iframe src="https://calendar.google.com/calendar/embed?src=oregonstate.edu_i98jdqce8oklho3jmc8hrc7488%40group.calendar.google.com&ctz=America%2FNew_York" style="border: 0" width="800" height="600" frameborder="0" scrolling="no">
+	</iframe>
+</div>
+
+<script src="edit.js"></script>
