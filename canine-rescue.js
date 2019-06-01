@@ -107,6 +107,23 @@ module.exports = function(){
 			});
 	}
 
+    function getTransport(res, mysql, context, complete) {
+        var sql = "SELECT t.transport_id, t.shelter_id, s.name, t.rescue_group_id, rg.name, t.foster_home_id, fh.address, t.dog_id, d.name, t.date_time, t.capacity, t.instructions, t.request_sent_date, t.acceptance_date, t.vehicle, t.license_plate \
+                    FROM transport t \
+                    INNER JOIN shelter s ON s.shelter_id = t.shelter_id \
+                    INNER JOIN rescue_group rg ON rg.rescue_group_id = t.rescue_group_id \
+                    INNER JOIN foster_home fh ON fh.foster_home_id = t.foster_home_id \
+                    INNER JOIN dog d ON d.dog_id = t.dog_id;"
+        mysql.pool.query(sql, function (error, results, fields) {
+            if(error) {
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            context.transport = results;
+            complete();
+        });
+    }
+
 
 
 
@@ -221,7 +238,16 @@ module.exports = function(){
 
 // Transportation Confirmation
     router.get('/confirm', function(req, res) {
-        res.render('confirm');
+        callBackCount = 0;
+        var context = {};
+        var mysql = req.app.get('mysql');
+        getTransport(res, mysql, context, complete);
+        function complete() {
+            callBackCount++;
+            if (callBackCount >= 1) {
+                res.render('confirm', context);
+            }
+        }
     });
 
 
