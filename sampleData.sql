@@ -226,8 +226,9 @@ INSERT INTO `dog_locations` (`dog_id`, `shelter_id`, `rescue_group_id`, `admissi
 (58,3,NULL,'2018-06-19',NULL),
 (59,4,NULL,'2019-02-24',NULL);
 
-INSERT INTO `transport` (`transport_id`, `shelter_id`, `rescue_group_id`, `foster_home_id`, `dog_id`, `date_time`, `capacity`, `instructions`, `request_sent_date`, `acceptance_date`, `vehicle`, `license_plate`)
+INSERT INTO `transport` (`transport_id`, `shelter_id`, `rescue_group_id`, `foster_home_id`, `dog_id`, `date_time`, `capacity`, `instructions`, `request_sent_date`, `acceptance_date`, `status`, `vehicle`, `license_plate`)
 VALUES
-(1, 1, 1, 1, 1, '2019-06-01', 3, NULL, '2019-05-15', NULL, "Honda Civic", "LAB111");
+(1, 1, 1, 1, 1, '2019-06-01', 3, NULL, '2019-05-15', NULL, "PENDING", "Honda Civic", "LAB111"),
+(2, 1, 1, 1, 1, '2018-04-02', 4, NULL, '2018-04-06', NULL, "PENDING", "Lamborghini Gallardo", "COOLGUY");
 
 /* END OF FILE */
