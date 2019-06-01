@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `dog` (
-  `dog_id` int(11) NOT NULL,
+  `dog_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `birthday` date NOT NULL,
   `sex` varchar(255) NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE `dog` (
 
 
 CREATE TABLE `shelter` (
-  `shelter_id` int(11) NOT NULL,
+  `shelter_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
   `policy` varchar(255) NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE `shelter` (
 
 
 CREATE TABLE `rescue_group` (
-  `rescue_group_id` int(11) NOT NULL,
+  `rescue_group_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
   `phone_number` varchar(255) NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE `rescue_group` (
 
 
 CREATE TABLE `foster_home` (
-  `foster_home_id` int(11) NOT NULL,
+  `foster_home_id` int(11) NOT NULL AUTO_INCREMENT,
   `address` varchar(255) NOT NULL,
   `phone_number` varchar(255) NOT NULL,
   `max_capacity` int(11) NOT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE `foster_home` (
 
 
 CREATE TABLE `event` (
-  `event_id` int(11) NOT NULL,
+  `event_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
   `date_time` datetime NOT NULL,
@@ -105,7 +105,7 @@ CREATE TABLE `dog_locations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `transport` (
-  `transport_id` int(11) NOT NULL AUTO_INCREMENT AUTO_INCREMENT=3,
+  `transport_id` int(11) NOT NULL AUTO_INCREMENT,
   `shelter_id` int(11),
   `rescue_group_id` int(11),
   `foster_home_id` int(11),
@@ -121,7 +121,7 @@ CREATE TABLE `transport` (
   CONSTRAINT `transport_ibfk_1` FOREIGN KEY (`shelter_id`) REFERENCES `shelter` (`shelter_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `transport_ibfk_2` FOREIGN KEY (`rescue_group_id`) REFERENCES `rescue_group` (`rescue_group_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `transport_ibfk_3` FOREIGN KEY (`foster_home_id`) REFERENCES `foster_home` (`foster_home_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `transport_ibfk_4` FOREIGN KEY (`dog_id`) REFERENCES `dog` (`dog_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `transport_ibfk_4` FOREIGN KEY (`dog_id`) REFERENCES `dog` (`dog_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -355,50 +355,6 @@ INSERT INTO `dog_locations` (`dog_id`, `shelter_id`, `rescue_group_id`, `admissi
 INSERT INTO `transport` (`transport_id`, `shelter_id`, `rescue_group_id`, `foster_home_id`, `dog_id`, `date_time`, `capacity`, `instructions`, `request_sent_date`, `acceptance_date`, `vehicle`, `license_plate`)
 VALUES
 (1, 1, 1, 1, 1, '2019-06-01', 3, NULL, '2019-05-15', NULL, "Honda Civic", "LAB111");
-
-/*
-ALTER TABLE `shelter`
-  ADD PRIMARY KEY (`shelter_id`);
-
-ALTER TABLE `rescue_group`
-  ADD PRIMARY KEY (`rescue_group_id`);
-
-ALTER TABLE `foster_home`
-  ADD PRIMARY KEY (`foster_home_id`);
-
-ALTER TABLE `event`
-  ADD PRIMARY KEY (`event_id`);
-*/
-
-
-
-ALTER TABLE `dog`
-  MODIFY `dog_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-COMMIT;
-
-
-ALTER TABLE `shelter`
-  MODIFY `shelter_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-COMMIT;
-
-
-ALTER TABLE `rescue_group`
-  MODIFY `rescue_group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-COMMIT;
-
-
-ALTER TABLE `foster_home`
-  MODIFY `foster_home_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-COMMIT;
-
-
-ALTER TABLE `event`
-  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-COMMIT;
-
-
-
-
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
