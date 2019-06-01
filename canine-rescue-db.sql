@@ -104,6 +104,26 @@ CREATE TABLE `dog_locations` (
   CONSTRAINT `dogs_locations_ibfk_3` FOREIGN KEY (`rescue_group_id`) REFERENCES `rescue_group_id` (`rescue_group_id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `transport` (
+  `transport_id` int(11) NOT NULL AUTO_INCREMENT AUTO_INCREMENT=3,
+  `shelter_id` int(11),
+  `rescue_group_id` int(11),
+  `foster_home_id` int(11),
+  `dog_id` int(11),
+  `date_time` datetime NOT NULL,
+  `capacity` int(11) NOT NULL,
+  `instructions` varchar(255),
+  `request_sent_date` datetime NOT NULL,
+  `acceptance_date` datetime,
+  `vehicle` varchar(255) NOT NULL,
+  `license_plate` varchar(255) NOT NULL,
+  PRIMARY KEY(`transport_id`),
+  CONSTRAINT `transport_ibfk_1` FOREIGN KEY (`shelter_id`) REFERENCES `shelter` (`shelter_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `transport_ibfk_2` FOREIGN KEY (`rescue_group_id`) REFERENCES `rescue_group` (`rescue_group_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `transport_ibfk_3` FOREIGN KEY (`foster_home_id`) REFERENCES `foster_home` (`foster_home_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `transport_ibfk_4` FOREIGN KEY (`dog_id`) REFERENCES `dog` (`dog_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 INSERT INTO `dog` (`dog_id`, `name`, `birthday`, `sex`, `breed`, `weight`, `status`) VALUES

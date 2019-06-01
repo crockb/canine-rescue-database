@@ -6,6 +6,8 @@ function incCapacity() {
 
 function decCapacity() {
 	var capacity = document.getElementById("capacity").value;
-	capacity--;
+	if (capacity > 1) {
+		capacity--;
+	}
 	document.getElementById("capacity").value = capacity;
 }

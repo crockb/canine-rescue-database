@@ -677,6 +677,16 @@ input,select {
     width:300px;
 }
 
+#capacity, #datePickUp, #timePickUp {
+	font-size: 14px;
+	text-align: center;
+	border: none;
+}
+
+.confirmLabel {
+	padding-right:0px;
+}
+
 
 
 
