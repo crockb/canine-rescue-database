@@ -114,7 +114,7 @@ module.exports = function(){
                     INNER JOIN rescue_group rg ON rg.rescue_group_id = t.rescue_group_id \
                     INNER JOIN foster_home fh ON fh.foster_home_id = t.foster_home_id \
                     INNER JOIN dog d ON d.dog_id = t.dog_id \
-                    WHERE t.transpord_id = ?"
+                    WHERE t.transport_id = ?"
         var inserts = [id];
         mysql.pool.query(sql, inserts, function (error, results, fields) {
             if(error) {
