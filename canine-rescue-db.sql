@@ -66,7 +66,7 @@ CREATE TABLE `foster_home` (
   `max_capacity` int(11) NOT NULL,
   `rescue_group_id` int(11),
   PRIMARY KEY (`foster_home_id`),
-  CONSTRAINT `foster_home_ibfk_1` FOREIGN KEY (`rescue_group_id`) REFERENCES `rescue group` (`rescue_group_id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `foster_home_ibfk_1` FOREIGN KEY (`rescue_group_id`) REFERENCES `rescue_group` (`rescue_group_id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -78,7 +78,7 @@ CREATE TABLE `event` (
   `description` varchar(255) NOT NULL,
   `rescue_group_id` int(11) NOT NULL,
   PRIMARY KEY (`event_id`),
-  CONSTRAINT `event_ibfk_1` FOREIGN KEY (`rescue_group_id`) REFERENCES `rescue group` (`rescue_group_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `event_ibfk_1` FOREIGN KEY (`rescue_group_id`) REFERENCES `rescue_group` (`rescue_group_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
