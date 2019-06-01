@@ -108,7 +108,7 @@ module.exports = function(){
 	}
 
     function getTransport(res, mysql, context, id, complete) {
-        var sql = "SELECT t.transport_id, t.shelter_id, s.name, t.rescue_group_id, rg.name, t.foster_home_id, fh.address, t.dog_id, d.name, t.date_time, t.capacity, t.instructions, t.request_sent_date, t.acceptance_date, t.vehicle, t.license_plate \
+        var sql = "SELECT t.transport_id, t.shelter_id, s.name AS shelter_name, t.rescue_group_id, rg.name AS rescue_group_name, t.foster_home_id, fh.address AS foster_home_address, t.dog_id, d.name AS dog_name, DATE_FORMAT(t.date_time, '%Y-%m-%d') AS t_date, DATE_FORMAT(t.date_time, '%T') AS t_time, t.capacity, t.instructions, t.request_sent_date, t.acceptance_date, t.vehicle, t.license_plate \
                     FROM transport t \
                     INNER JOIN shelter s ON s.shelter_id = t.shelter_id \
                     INNER JOIN rescue_group rg ON rg.rescue_group_id = t.rescue_group_id \
@@ -122,6 +122,18 @@ module.exports = function(){
                 res.end();
             }
             context.transport = results;
+            complete();
+        });
+    }
+
+    function updateTransport(res, mysql, req, complete) {
+        var sql = "UPDATE transport SET date_time=?, capacity=?, acceptance_date=? WHERE transport_id=?";
+        var inserts = [req.body.date + req.body.time, req.body.capacity, req.body.acceptance_date, req.body.transport_id];
+        mysql.pool.query(sql, inserts, function (error, result) {
+            if(error) {
+                res.write(JSON.stringify(error));
+                res.end();
+            }
             complete();
         });
     }
@@ -250,6 +262,22 @@ module.exports = function(){
                 res.render('confirm', context);
             }
         }
+    });
+
+    router.put('/confirm/:id', function(req, res) {
+        var mysql = req.app.get('mysql')
+        var sql = "UPDATE transport SET date_time=?, capacity=?, acceptance_date=? WHERE transport_id=?";
+        var inserts = [req.body.date_time, req.body.capacity, req.body.acceptance_date, req.params.id];
+        sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+            if(error) {
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            else {
+                res.status(200);
+                res.end();
+            }
+        });
     });
 
 

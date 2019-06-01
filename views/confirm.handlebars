@@ -1,20 +1,65 @@
 <!DOCTYPE html>
 <h1>Transportation Confirmation</h1>
-<form>
-	<fieldset>
-		<legend>Pick Up Information: </legend>
-		<label class="confirmLabel">Transport Capacity: </label>
-		<input id="plus" class="btn" type="button" value="Increase" onclick="incCapacity()">
-		<input id="capacity" type="number">
-		<input id="minus" class="btn" type="button" value ="Decrease" onclick="decCapacity()">
-		<label class="confirmLabel">Date of Pick Up: </label>
-		<input id="datePickUp" type="date" value="2019-04-15">
-		<label class="confirmLabel">Time of Pick Up: </label>
-		<input id="timePickUp" type="time" value="10:00">
-	</fieldset>
-</form>
-
-<iframe src="https://calendar.google.com/calendar/embed?src=oregonstate.edu_i98jdqce8oklho3jmc8hrc7488%40group.calendar.google.com&ctz=America%2FNew_York" style="border: 0" width="800" height="600" frameborder="0" scrolling="no">
-</iframe>
+<br>
+{{#each transport}}
+<table class="coolTable">
+	<thead>
+		<tr>
+			<th class="coolHeader">Vehicle</th>
+			<th class="coolHeader">License Plate</th>
+			<th class="coolHeader">Capacity</th>
+			<th class="coolHeader">Pick Up Date</th>
+			<th class="coolHeader">Pick Up Time</th>
+			{{#if instructions}}
+			<th class="coolHeader">Instructions</th>
+			{{/if}}
+			<th class="coolHeader">Request Sent Date</th>
+			<th class="coolHeader">Acceptance Date</th>
+			{{#if shelter_name}}
+			<th class="coolHeader">Shelter Name</th>
+			{{/if}}
+			{{#if rescue_group_name}}
+			<th class="coolHeader">Rescue Group Name</th>
+			{{/if}}
+			{{#if foster_home_address}}
+			<th class="coolHeader">Foster Home Address</th>
+			{{/if}}
+		</tr>
+	</thead>
+	<tbody>
+		<tr class="center-column">
+			<td>{{this.vehicle}}</td>
+			<td>{{this.license_plate}}</td>
+			<td id="capacity">{{this.capacity}}</td>
+			<td><input id="dateConfirm" name = "dateConfirm" class="dateTimeConfirm" type="date" value="{{t_date}}"></td>
+			<td><input id="timeConfirm" name = "dateConfirm" class="dateTimeConfirm" type="time" value="{{t_time}}"></td>
+			{{#if instructions}}
+			<td>{{this.instructions}}</td>
+			{{/if}}
+			<td>{{this.request_sent_date}}</td>
+			<td>{{this.acceptance_date}}</td>
+			{{#if shelter_name}}
+			<td>{{this.shelter_name}}</td>
+			{{/if}}
+			{{#if rescue_group_name}}
+			<td>{{this.rescue_group_name}}</td>
+			{{/if}}
+			{{#if foster_home_address}}
+			<td>{{this.foster_home_address}}</td>
+			{{/if}}
+		</tr>
+	</tbody>
+</table>
+{{/each}}
+<br>
+<div id="buttonCapWrap">
+	<button class="btn" onclick="incCapacity()">Increase Capacity</button>
+	<button class="btn" onclick="decCapacity()">Decrease Capacity</button>
+</div>
+<br>
+<div id="buttonSaveCancelWrap">
+	<button class="btn" onclick="updateConfirm(1)">Submit</button>
+	<a class="btn" href="/canine-rescue/home">Cancel</a>
+</div>
 
 <script src="/static/editConfirm.js"></script>

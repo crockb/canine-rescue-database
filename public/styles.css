@@ -585,6 +585,8 @@ iframe {
 /* Additional                                                                    */
 /*********************************************************************************/
 
+
+
 table
     {
 	    width: 95%;
@@ -677,15 +679,37 @@ input,select {
     width:300px;
 }
 
-#capacity, #datePickUp, #timePickUp {
-	font-size: 14px;
-	text-align: center;
-	border: none;
-}
-
 .confirmLabel {
 	padding-right:0px;
 }
+
+#buttonCapWrap, #buttonSaveCancelWrap {
+	text-align:center;
+}
+
+.dateTimeConfirm {
+	font-family: 'Muli', sans-serif;
+	font-size: 12pt;
+	width:120px;
+	border:none;
+}
+
+#dateConfirm {
+	width:140px;
+}
+
+.coolTable {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.coolHeader {
+	width: 140px;
+	background-color: black;
+	color: white;
+}
+
+
 
 
 
