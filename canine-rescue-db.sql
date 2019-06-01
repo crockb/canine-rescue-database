@@ -101,7 +101,7 @@ CREATE TABLE `dog_locations` (
   `discharge_date` date,
   CONSTRAINT `dogs_locations_ibfk_1` FOREIGN KEY (`dog_id`) REFERENCES `dog` (`dog_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `dogs_locations_ibfk_2` FOREIGN KEY (`shelter_id`) REFERENCES `shelter_id` (`shelter_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `dogs_locations_ibfk_3` FOREIGN KEY (`rescue_group_id`) REFERENCES `rescue_group_id` (`rescue_group_id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `dogs_locations_ibfk_3` FOREIGN KEY (`rescue_group_id`) REFERENCES `rescue_group` (`rescue_group_id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `transport` (
