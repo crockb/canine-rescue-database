@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<h1>Transportation Confirmation</h1>
+<br>
+{{#each transport}}
+<table class="coolTable">
+	<thead>
+		<tr>
+			<th class="coolHeader">Vehicle</th>
+			<th class="coolHeader">License Plate</th>
+			<th class="coolHeader">Capacity</th>
+			<th class="coolHeader">Pick Up Date</th>
+			<th class="coolHeader">Pick Up Time</th>
+			<th class="coolHeader">Status</th>
+			{{#if this.instructions}}
+			<th class="coolHeader">Instructions</th>
+			{{/if}}
+			<th class="coolHeader">Request Sent Date</th>
+			<th class="coolHeader">Acceptance Date</th>
+			{{#if this.shelter_name}}
+			<th class="coolHeader">Shelter Name</th>
+			{{/if}}
+			{{#if this.rescue_group_name}}
+			<th class="coolHeader">Rescue Group Name</th>
+			{{/if}}
+			{{#if this.foster_home_address}}
+			<th class="coolHeader">Foster Home Address</th>
+			{{/if}}
+		</tr>
+	</thead>
+	<tbody>
+		<tr class="center-column">
+			<td>{{this.vehicle}}</td>
+			<td>{{this.license_plate}}</td>
+			<td id="capacity">{{this.capacity}}</td>
+			<td><input id="dateConfirm" name = "dateConfirm" class="dateTimeConfirm" type="date" value="{{t_date}}"></td>
+			<td><input id="timeConfirm" name = "dateConfirm" class="dateTimeConfirm" type="time" value="{{t_time}}"></td>
+			<td id="status">{{this.status}}</td>
+			{{#if this.instructions}}
+			<td>{{this.instructions}}</td>
+			{{/if}}
+			<td>{{this.request_sent_date}}</td>
+			<td>{{this.acceptance_date}}</td>
+			{{#if this.shelter_name}}
+			<td>{{this.shelter_name}}</td>
+			{{/if}}
+			{{#if this.rescue_group_name}}
+			<td>{{this.rescue_group_name}}</td>
+			{{/if}}
+			{{#if this.foster_home_address}}
+			<td>{{this.foster_home_address}}</td>
+			{{/if}}
+		</tr>
+	</tbody>
+</table>
+<br>
+<div id="buttonCapWrap">
+	<button class="btn" onclick="incCapacity()">Increase Capacity</button>
+	<button class="btn" onclick="decCapacity()">Decrease Capacity</button>
+</div>
+<br>
+<div id="buttonSaveCancelWrap">
+	<button class="btn" onclick="updateConfirm1({{this.transport_id}})">Accept</button>
+	<button class="btn" onclick="updateConfirm2({{this.transport_id}})">Reject</button>
+	<a class="btn" href="/canine-rescue/home">Cancel</a>
+</div>
+{{/each}}
+
+<script src="/static/editConfirm.js"></script>
