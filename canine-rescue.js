@@ -19,50 +19,6 @@ module.exports = function(){
 /***************************************************************************************************
 ** FUNCTIONS
 ****************************************************************************************************/
-/*
-// DELETE PERSONNEL
-    router.delete('/personnel/:id', function (req, res) {
-        var mysql = req.app.get('mysql');
-        var sql = "DELETE FROM personnel WHERE personnel_id = ?";
-        var inserts = [req.params.id];
-        sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
-            if (error) {
-                res.write(JSON.stringify(error));
-                res.status(400);
-                res.end();
-            } else {
-                res.status(202).end();
-            }
-        })
-    })
-*/
-    router.post('/favorite/:id', function (req, res) {
-        var mysql = req.app.get('mysql');
-        var sql = 'INSERT INTO favorites (dog_id) VALUES (?)';
-        var inserts = [req.dog_id];
-        sql = mysql.pool.query(sql, inserts, function(error, results, fields){
-            if (error) {
-                res.write(JSON.stringify(error));
-                res.end();
-            } else {
-                res.redirect('/canine-rescue/favorites');
-            }
-        });
-    });
-
-    router.delete('/favorite/:id', function (req, res) {
-        var mysql = req.app.get('mysql');
-        var sql = 'DELETE FROM favorites WHERE dog_id = ?';
-        var inserts = [req.dog_id];
-        sql = mysql.pool.query(sql, inserts, function(error, results, fields){
-            if (error) {
-                res.write(JSON.stringify(error));
-                res.end();
-            } else {
-                res.redirect('/canine-rescue/favorites');
-            }
-        });
-    });
 
     function getShelters(res, mysql, context, complete){
         mysql.pool.query("SELECT shelter_id, name, address, policy, max_capacity, total_dogs FROM shelter INNER JOIN (SELECT shelter_id as s_id, COUNT(dog_id) as total_dogs FROM dog_locations WHERE discharge_date IS NULL GROUP BY shelter_id) dl ON shelter_id = dl.s_id ORDER BY name ASC", function (error, results, fields) {
@@ -100,19 +56,6 @@ module.exports = function(){
 
     function getDogsByShelterId(res, mysql, context, id, complete) {
     var sql = "SELECT tbl3.name as shelter_name, tbl1.dog_id as dog_id, tbl2.name, birthday, sex, breed, weight, status FROM (SELECT dog_id, shelter_id FROM dog_locations WHERE shelter_id = ? AND discharge_date IS NULL) tbl1 INNER JOIN (SELECT dog_id, name, birthday, sex, breed, weight, status FROM dog) tbl2 ON tbl1.dog_id = tbl2.dog_id INNER JOIN (SELECT shelter_id, name FROM shelter) tbl3 ON tbl1.shelter_id = tbl3.shelter_id";
-    var inserts = [id];
-    mysql.pool.query(sql, inserts, function (error, results, fields) {
-        if (error) {
-            res.write(JSON.stringify(error));
-            res.end();
-            }
-                context.dogs = results;
-                complete();
-        });
-    }
-
-    function getFavorites(res, mysql, context, id, complete) {
-    var sql = "SELECT tbl1.dog_id as dog_id, tbl2.name, birthday, sex, breed, weight, status FROM (SELECT dog_id FROM favorites WHERE 1) tbl1 INNER JOIN (SELECT dog_id, name, birthday, sex, breed, weight, status FROM dog) tbl2 ON tbl1.dog_id = tbl2.dog_id";
     var inserts = [id];
     mysql.pool.query(sql, inserts, function (error, results, fields) {
         if (error) {
@@ -164,6 +107,25 @@ module.exports = function(){
 			});
 	}
 
+    function getTransport(res, mysql, context, id, complete) {
+        var sql = "SELECT t.transport_id, t.shelter_id, s.name AS shelter_name, t.rescue_group_id, rg.name AS rescue_group_name, t.foster_home_id, fh.address AS foster_home_address, t.dog_id, d.name AS dog_name, DATE_FORMAT(t.date_time, '%Y-%m-%d') AS t_date, DATE_FORMAT(t.date_time, '%T') AS t_time, t.capacity, t.instructions, DATE_FORMAT(t.request_sent_date, '%m/%d/%Y') AS request_sent_date, DATE_FORMAT(t.acceptance_date, '%m/%d/%Y') AS acceptance_date, t.status, t.vehicle, t.license_plate \
+                    FROM transport t \
+                    INNER JOIN shelter s ON s.shelter_id = t.shelter_id \
+                    INNER JOIN rescue_group rg ON rg.rescue_group_id = t.rescue_group_id \
+                    INNER JOIN foster_home fh ON fh.foster_home_id = t.foster_home_id \
+                    INNER JOIN dog d ON d.dog_id = t.dog_id \
+                    WHERE t.transport_id = ?"
+        var inserts = [id];
+        mysql.pool.query(sql, inserts, function (error, results, fields) {
+            if(error) {
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            context.transport = results;
+            complete();
+        });
+    }
+
 
 
 
@@ -209,21 +171,6 @@ module.exports = function(){
             callbackCount++;
             if (callbackCount >= 1) {
                 res.render('dogs-by-shelter', context);
-            }
-        }
-    });
-
-//FAVORITES
-     router.get('/favorites', function (req, res) {
-        callbackCount = 0;
-        var context = {};
-        //context.jsscripts = ["selectedteam.js", "updateperson.js"];
-        var mysql = req.app.get('mysql');
-        getFavorites(res, mysql, context, req.params.id, complete);
-        function complete() {
-            callbackCount++;
-            if (callbackCount >= 1) {
-                res.render('favorites', context);
             }
         }
     });
@@ -289,6 +236,36 @@ module.exports = function(){
                 res.render('dog-by-id', context);
             }
         }
+    });
+
+// Transportation Confirmation
+    router.get('/confirm/:id', function(req, res) {
+        callBackCount = 0;
+        var context = {};
+        var mysql = req.app.get('mysql');
+        getTransport(res, mysql, context, req.params.id, complete);
+        function complete() {
+            callBackCount++;
+            if (callBackCount >= 1) {
+                res.render('confirm', context);
+            }
+        }
+    });
+
+    router.put('/confirm/:id', function(req, res) {
+        var mysql = req.app.get('mysql')
+        var sql = "UPDATE transport SET date_time=?, capacity=?, acceptance_date=?, status=? WHERE transport_id=?";
+        var inserts = [req.body.date_time, req.body.capacity, req.body.acceptance_date, req.body.status, req.params.id];
+        sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+            if(error) {
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            else {
+                res.status(200);
+                res.end();
+            }
+        });
     });
 
 
