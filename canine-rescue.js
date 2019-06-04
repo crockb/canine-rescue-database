@@ -268,6 +268,76 @@ module.exports = function(){
         });
     });
 
+    //Josh Functions
+
+router.post('/favorites/:dog_id', function (req, res) {
+        var mysql = req.app.get('mysql');
+        var sql = 'INSERT INTO favorites (dog_id) VALUES (?)';
+        var inserts = [req.params.dog_id];
+        sql = mysql.pool.query(sql, inserts, function(error, results, fields){
+            if (error) {
+                res.write(JSON.stringify(error));
+                res.end();
+            } else {
+                res.redirect('/canine-rescue/favorites');
+            }
+        });
+    });
+
+    router.delete('/favorites/:dog_id', function (req, res) {
+        var mysql = req.app.get('mysql');
+        var sql = 'DELETE FROM favorites WHERE dog_id = ?';
+        var inserts = [req.params.dog_id];
+        sql = mysql.pool.query(sql, inserts, function(error, results, fields){
+            if (error) {
+                res.write(JSON.stringify(error));
+                res.end();
+            } else {
+                res.status(202).end();
+            }
+        });
+    });
+
+    function getFavorites(res, mysql, context, id, complete) {
+    var sql = "SELECT tbl1.dog_id as dog_id, tbl2.name, birthday, sex, breed, weight, status FROM (SELECT dog_id FROM favorites WHERE 1) tbl1 INNER JOIN (SELECT dog_id, name, birthday, sex, breed, weight, status FROM dog) tbl2 ON tbl1.dog_id = tbl2.dog_id";
+    var inserts = [id];
+    mysql.pool.query(sql, inserts, function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+            }
+                context.dogs = results;
+                complete();
+        });
+    }
+
+    router.get('/favorites', function (req, res) {
+        callbackCount = 0;
+        var context = {};
+        context.jsscripts = ["deleteFavorite.js"];
+        var mysql = req.app.get('mysql');
+        getFavorites(res, mysql, context, req.params.id, complete);
+        function complete() {
+            callbackCount++;
+            if (callbackCount >= 1) {
+                res.render('favorites', context);
+            }
+        }
+    });
+
+     router.get('/favorites/:id', function (req, res) {
+        callbackCount = 0;
+        var context = {};
+        context.jsscripts = ["deleteFavorite.js"];
+        var mysql = req.app.get('mysql');
+        getFavorites(res, mysql, context, req.params.id, complete);
+        function complete() {
+            callbackCount++;
+            if (callbackCount >= 1) {
+                res.render('favorites2', context);
+            }
+        }
+    });
 
 return router;
 }();

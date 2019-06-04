@@ -16,7 +16,7 @@
 				<td><img src="/static/photos/dog{{dog_id}}.jpg"></td>
 			</tr>
 			<tr>
-				<td><button type="button" class="btn">Add to Favorites</button></td>
+				<td><button type="button" onclick="addFavorite({{this.dog_id}})"> Add to Favorites</button></td>
 				<td></td>
 			</tr>
 			{{#if ../owner}}
@@ -70,3 +70,5 @@
     </table>
 	{{/each}}
 </div>
+
+<script src="/static/addFavorite.js"></script>
